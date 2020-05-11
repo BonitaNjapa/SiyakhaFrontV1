@@ -1,0 +1,66 @@
+﻿@model Data.ShoppingCartM.Department
+@{
+    ViewBag.Title = "Department Manager";
+
+     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                Add New Category
+            </h3>
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="kt-portlet__body">
+
+
+            <div class="form-group row">
+                <div class="col-lg-5">
+                    <label>Category :</label>
+                    @Html.EditorFor(model => model.Department_Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Category Name" } })
+                    @Html.ValidationMessageFor(model => model.Department_Name, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="col-lg-5">
+                    <label>Description:</label>
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Description" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <a type="reset" href="@Url.Action("Index",controllerName : "Departments")" class="btn btn-secondary">Cancel</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    }
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

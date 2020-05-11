@@ -1,0 +1,45 @@
+﻿@model Data.ShoppingCartM.Department
+@{
+    ViewBag.Title = "Department Manager";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2 class="title">@Model.Department_Name Details</h2>
+<table class="table">
+    <tr>
+        <th>@Html.LabelFor(model => model.Department_ID)</th>
+        <td>
+            @Html.DisplayFor(model => model.Department_ID)
+        </td>
+    </tr>
+    <tr>
+        <th>@Html.LabelFor(model => model.Department_Name)</th>
+        <td>
+            @Html.DisplayFor(model => model.Department_Name)
+        </td>
+    </tr>
+    <tr>
+        <th>@Html.LabelFor(model => model.Description)</th>
+        <td>
+            @Html.DisplayFor(model => model.Description)
+        </td>
+    </tr>
+    <tr>
+        
+      
+        <td>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a class="btn btn-info btn-xs" href="@Url.Action("Edit","Departments", new { id=Model.Department_ID })"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
+                            <a type="reset" href="@Url.Action("Index",controllerName : "Departments")" class="btn btn-secondary">Cancel</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </td>
+        
+       
+    </tr>
+</table>

@@ -1,0 +1,141 @@
+﻿@using Mid_Farm.Logic
+@using Mid_Farm.Models
+@using Mid_Farm.Models
+
+@{
+    ViewBag.Title = "Payment Successful";
+    ApplicationDbContext db = new ApplicationDbContext();
+}
+
+<h2 class="title text-center">@ViewBag.Title</h2>
+
+<h3>Order Details</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <b>Account Details</b>
+        @{ Customer Account = (Customer)ViewBag.Account; }
+
+        <table class="table">
+            <tr>
+                <td>Name</td>
+                <td>@Account.FirstName   @Account.LastName</td>
+            </tr>
+            <tr>
+                <td>Cell Number</td>
+                <td>@Account.ContactNo</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>@Account.Email</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+
+        <b>Order Details</b>
+        @{ Order order = (Order)ViewBag.Order; }
+
+        <table class="table">
+            <tr>
+                <td>Order No.</td>
+                <td>@order.Order_Id</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>@order.status</td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+
+        <b>Shipping Details</b>
+        @{ Order_Address address = (Order_Address)ViewBag.Address; }
+        @if (address != null)
+        {
+            <table class="table">
+                <tr>
+                    <td>Street</td>
+                    <td>@address.street</td>
+                </tr>
+                <tr>
+                    <td>City/Town</td>
+                    <td>@address.city</td>
+                </tr>
+                <tr>
+                    <td>Zipcode</td>
+                    <td>@address.zipcode</td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <hr />
+            <p>
+                <b> Collect your order at our Company.</b>
+                <br />
+                <i class="fa fa-map-marker"></i>  21 May St, Durban, 4001
+                <br />
+                <i class="fa fa-clock-o"></i>  8:30 am - 17:00 working hours
+                <br />
+            </p>
+        }
+
+    </div>
+    <div class="col-md-6">
+
+        <b>Items in this Order</b>
+        <table class="table">
+            <tr>
+                <th>
+                    Picture
+                </th>
+                <th>
+                    Item
+                </th>
+                <th>
+                    Qty
+                </th>
+                <th>
+                    Price
+                </th>
+            </tr>
+
+            @foreach (var item in ViewBag.Items)
+            {
+                <tr>
+                    <td>
+                        @if (item.Item.Picture != null)
+                        {
+                            var base64 = Convert.ToBase64String(item.Item.Picture);
+                            var imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                            <img src="@imgSrc" width="60" height="70" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Item.items.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.quantity)
+                    </td>
+                    <td>
+                        R @Html.DisplayFor(modelItem => item.price)
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    R @ViewBag.Total
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>

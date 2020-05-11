@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Data.ShoppingCartM.Department>
+@{
+    ViewBag.Title = "Department Manager";
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2><b>All Categories </b></h2>
+
+<link href="~/assets/css/demo1/style.bundle.css" rel="stylesheet" />
+<a href="@Url.Action("Create", "Departments")" button class="btn btn-outline-success"><i class="fa fa-plus-circle"></i> Add New</a>
+<div class="align-right">
+
+   
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+
+            </div>
+            <table class="table table-hover table-striped" id="my_list">
+                <thead>
+                    <tr class="table-header-row">
+                        <th>
+                            @Html.DisplayNameFor(model => model.Department_ID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Department_Name)
+                        </th>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>*@
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Department_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Department_Name)
+                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>*@
+                        <td>
+                            <a class="btn btn-outline-secondary btn-xs" href="@Url.Action("Details","Departments", new { id=item.Department_ID })"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a class="btn btn-outline-info btn-xs" href="@Url.Action("Edit","Departments", new { id=item.Department_ID })"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                            <a class="btn btn-outline-danger btn-xs" href="#" onclick="deleteItem('@item.Department_ID')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $('#my_list').dataTable(
+        {
+            dom: 'Bfrtip',
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10 rows', '25 rows', '50 rows', 'Show all']
+            ],
+            buttons: [
+                'pageLength', 'pdf', 'print'
+            ]
+        }
+    );
+    $('#my_list')
+        .removeClass('display')
+        .addClass('table table-striped table-hover');
+
+     function deleteItem(id) {
+        var doDelete = confirm("Are you sure you want to remove this Category ?");
+        if (doDelete) {
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("Delete")?id=" + id,
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (e) {
+                    return;
+                }
+            });
+        }
+    }
+</script>

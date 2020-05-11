@@ -1,0 +1,156 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/toastr")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a href="index.html" class="navbar-brand">Home</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <a href="@Url.Action("Index", "Home")" class="nav item active nav-link">Home</a>
+                <a href="" class="nav-item active nav-link">About</a>
+                <a href="" class="nav-item active nav-link">Contact</a>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a href="#" class="dropdown-item">Manage</a>
+                        <a href="#" class="dropdown-item">Add New Thing</a>
+
+                        <a href="#" class="dropdown-item">Something else</a>
+                    </div>
+                </li>
+                @{ 
+                       var department_Service = new BusinessLogic.DepartmentBusiness();
+
+                    var cart_Service = new BusinessLogic.CartBusiness();
+                    double total = 0;
+                }
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" id="navbardropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="fa fa-shopping-cart"></span> @*Cart*@ (@Html.Action(actionName: "countCartItems", controllerName: "Shopping"))<span class="caret"></span></a>
+                    <ul class="dropdown-menu mega">
+                        <ul class="sub-menu">
+                            <table class="table">
+                                <tr class="card-header bg-dark text-light">
+                                    <th>Item</th>
+                                    <th>
+                                    </th>
+                                    <th style="text-align:center">
+                                        Quantity
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                    <th style="text-align:center">
+                                        Sub-Total
+                                    </th>
+                                </tr>
+                                @if (cart_Service.GetCartItems().Count() == 0)
+                                {
+                                    <tr>
+                                        <th colspan="5" style="text-align:center">Your cart is empty</th>
+                                    </tr>
+                                }
+                                @foreach (var item in cart_Service.GetCartItems().OrderBy(x => x.Item.Name))
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (item.Item.ImgPath != null)
+                                            {
+                                                <img src="~/Content/Images/@item.Item.ImgPath" width="30" height="30" />
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Details","Items", new { id=item.Item.ItemCode })">@item.Item.Name</a>
+                                        </td>
+                                        <td style="text-align:center">
+                                            @item.quantity
+                                        </td>
+                                        <td>
+                                            @item.Item.Price.ToString("C")
+                                        </td>
+                                        <td style="text-align:center">
+                                            @{
+                                                var subtotal = item.quantity * item.Item.Price;
+                                                total += subtotal;
+                                            }
+                                            @subtotal.ToString("C")
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:center">
+                                        Total
+                                    </td>
+                                    <th style="text-align:center">
+                                        @total.ToString("C")
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <a class="btn btn-default" href="@Url.Action("Index","Shopping")">
+                                            <i class="fa fa-list"></i> Shop More
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-default" href="@Url.Action("ShoppingCart", "Shopping")">
+                                            <i class="fa fa-shopping-cart"></i> View Cart
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if (cart_Service.GetCartItems().Count() == 0)
+                                        {
+                                            <a class="btn btn-default disabled" href="@Url.Action("Checkout","Shopping")">
+                                                <i class="fa fa-lock"></i> Checkout
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-default" href="@Url.Action("Checkout","Shopping")">
+                                                <i class="fa fa-lock"></i> Checkout
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
+                        </ul>
+                    </ul>
+                </li>
+            </ul>
+            <form action="#" method="post" class="form-inline my-2 mylg-0">
+                <input type="search" name="buscar" id="buscar" class="form-control mr-sm-2" placeholder="Search" aria-label="Buscar">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </nav>
+    <div class="container body-content">
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toastr")
+    @RenderSection("scripts", required: false)
+    @{ Html.RenderPartial("_Toastr"); }
+</body>
+</html>

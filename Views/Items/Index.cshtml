@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Data.ShoppingCartM.Item>
+
+@{
+    ViewBag.Title = "List of Items";
+
+    //Layout = "~/Views/Shared/_ShopLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+
+}
+
+<link href="~/assets/css/demo1/style.bundle.css" rel="stylesheet" />
+<a href="@Url.Action("Create", "Items")" button class="btn btn-success"><i class="fa fa-plus-circle"></i> Add New</a>
+
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>#</th>
+                @*<th> @Html.DisplayNameFor(model => model.Picture)</th>*@
+                @*<th> @Html.DisplayNameFor(model => model.ItemCode)</th>*@
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>Category</th>
+                <th> @Html.DisplayNameFor(model => model.QuantityInStock)</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CostPrice)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemCode)
+                    </td>
+                    @*<td>
+                            <a><img src="data:image/png;base64,@Convert.ToBase64String(item.Picture, 0, item.Picture.Length)" style="width: 20px; height: 20px" alt="" /></a>
+                        </td>*@
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department.Department_Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantityInStock)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostPrice)
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-secondary btn-xs" href="@Url.Action("Details","Items", new { id=item.ItemCode })"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        <a class="btn btn-outline-info btn-xs" href="@Url.Action("Edit","Items", new { id=item.ItemCode })"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                        <a class="btn btn-outline-danger btn-xs" href="#" onclick="deleteItem('@item.ItemCode')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        @*<a href="@Url.Action("Delete", "Items", new { id = item.ItemCode })"><i class="fa fa-times">Delete</i></a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+     function deleteItem(id) {
+        var doDelete = confirm("Are you sure you want to remove this Item ?");
+        if (doDelete) {
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("Delete")?id=" + id,
+                async: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (e) {
+                    return;
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,88 @@
+﻿@model Model.RegisterModel
+
+@{
+
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~/Content/LoginCss.css" rel="stylesheet" />
+    <title>Signup</title>
+</head>
+<body>
+    <div class="wrap">
+        <div class="viewport">
+            <div class="holder signup">
+                <div class="left-section">
+                    <div class="icon-user-add">
+                        <img src="~/Images/maleadd.png" class="male-add" alt="">
+                    </div>
+                    <div class="description-holder">
+                        <div class="signup-text">SIGNUP NOW</div>
+                        <div class="label-text">IT'S FREE AND ALWAYS WILL BE!</div>
+                        <div class="label-text">@Html.ValidationSummary()</div>
+                    </div>A
+                </div>
+                <div class="right-section">
+                    <div class="logo">LOGO</div>
+                    @using (Html.BeginForm("Index", "Register", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="input-container">
+                            @*<input type="text" placeholder="Username">*@
+                            @Html.TextBoxFor(m => m.FirstName, new { @placeholder = "First Name", @style = "max-width:100%" })
+                            <div>
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            @*<input type="text" placeholder="Username">*@
+                            @Html.TextBoxFor(m => m.LastName, new { @placeholder = "Last Name", @style = "max-width:100%" })
+                            <div>
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            @*<input type="text" placeholder="Username">*@
+                            @Html.TextBoxFor(m => m.Contact, new { @placeholder = "Contact", @style = "max-width:100%" })
+                            <div>
+                                @Html.ValidationMessageFor(m => m.Contact, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            @*<input type="text" placeholder="Username">*@
+                            @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email, eg example@example.com", @style = "max-width:100%" })
+                            <div>
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            @*<input type="text" placeholder="Username">*@
+                            @Html.TextBoxFor(m => m.Password, new { @placeholder = "Password", @style = "max-width:100%", @type = "Password" })
+                            <div>
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <center><button type="submit" onclick="this.form.submit();this.disabled = true;" class="signup-btn">Signup<i class="fas fa-sign-in-alt"></i></button></center>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
