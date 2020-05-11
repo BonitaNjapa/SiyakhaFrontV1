@@ -360,6 +360,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\UserManagement\" />
     <Folder Include="Views\UserMananger\" />
   </ItemGroup>

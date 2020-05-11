@@ -28,8 +28,6 @@ namespace SiyakhaFrontV1.Controllers
         private OrderAddressRepository _orderAddressRepository = new OrderAddressRepository();
         private OrderTrackingRepository _orderTrackingRepository = new OrderTrackingRepository();
         private DepartmentBusiness department_Service;
-
-
         public ActionResult Index(int? id)
         {
             var items_results = new List<Item>();
@@ -58,8 +56,6 @@ namespace SiyakhaFrontV1.Controllers
             catch (Exception) { }
             return View(items_results);
         }
-
-
         public ActionResult increaseItemQuantity(string id)
         {
             var item = cart_Service.GetCartItems().FirstOrDefault(x => x.Id == id);
