@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.CompSuppManager;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -41,17 +42,17 @@ namespace Data.ShoppingCartM
         [Display(Name = "Sale Price")]
         [DataType(DataType.Currency)]
         public double Price { get; set; }
-
         [Required]
         [Display(Name = "Cost Price")]
         [DataType(DataType.Currency)]
         public double CostPrice { get; set; }
-
         public string ImgPath { get; set; }
-
         public virtual Department Department { get; set; }
         public virtual ICollection<CartItem> Cart_Items { get; set; }
-        //public virtual ICollection<Supplier_Item> Supplier_Items { get; set; }
+        //Supplier Who supplies the product
+        public int SupplierId { get; set; }
+        [ForeignKey("SupplierId")]
+        public virtual Supplier Supplier { get; set; }
         public virtual ICollection<ProductOrder> FoodOrders { get; set; }
         public Item()
         {
@@ -61,8 +62,6 @@ namespace Data.ShoppingCartM
         {
             return Price - CostPrice;
         }
-
-
     }
 
 }

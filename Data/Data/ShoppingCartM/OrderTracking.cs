@@ -73,9 +73,6 @@ namespace Data.ShoppingCartM
         public decimal TotalPrice { get; set; }
         public List<OrderDetails> OrderDetails { get; set; }
 
-
-
-
         public string Email { get; set; }
         public bool shipped { get; set; }
         public string status { get; set; }

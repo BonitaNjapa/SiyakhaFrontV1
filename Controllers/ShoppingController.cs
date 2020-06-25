@@ -175,9 +175,7 @@ namespace SiyakhaFrontV1.Controllers
                 status = "Awaiting Payment",
                 TotalPrice = cart_Service.GetCartTotal(cart_Service.GetCartID())
             });
-            // db.SaveChanges();
-            //order_Service.AddOrder(customer);
-            /* Get the last placed order by the customer */
+            
             var order = _orderRepository.GetAll() //db.Orders.ToList()
                 .FindAll(x => x.Email == user.Email)
                 .OrderByDescending(x => x.dateCraeted)
